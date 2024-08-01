@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <script src="js/jquery-2.1.3.min.js"></script>
+    <link rel="stylesheet" href="css/sample.css">
+    <title>じゃんけん</title>
+    
+</head>
+
+<body>
+
+    <header>
+    <h3 class= "entry">じゃんけんゲーム</h3>
+    </header>
+
+    <main>
+        <section>
+      
+            <!-- 装飾ボタン -->
+            <div class="start"><button="" id="janken_btn" class="inactive">スタート</button></div>
+        <div class="countdown-container">
+
+            <!-- カウントダウンバー -->
+            <div id="progress-bar"></div>
+        </div>
+
+             <!-- ネーミングセンスorz -->
+        <div id="jajaja">じゃんけん..</div>
+        <ul>
+            <li id="gu_btn" style="display: none;" >グー</li>
+            <li id="cho_btn"  style="display: none;" >チョキ</li>
+            <li id="par_btn"  style="display: none;" >パー</li>
+        </ul>
+        
+        <div id="judgment"></div>
+        <span id="pc_hands"></span>
+        
+        </section>
+    </main>
+
+    <footer></footer>
+
+    <script>
+   
+let id;
+
+// グローバルに出す？？
+let intervalId; 
+
+// カウンドダウン開始
+$("#janken_btn").on("click", function() {
+    let count = 10;
+    const progressBar = $("#progress-bar"); // プログレスバーの要素を取得？
+    const progressBarWidth = progressBar.width(); // プログレスバーの初期幅を取得？
+
+    intervalId = setInterval(()=> {
+        count--;
+        $("#time").text(count);
+
+        // プログレスバーの幅を更新？
+        const width = (1 - count / 10) * progressBarWidth;
+        progressBar.css('width', width);
+
+        if (count <= 0) {
+            clearInterval(intervalId);
+            $("#gu_btn").click();
+        }
+    }, 1000);
+});
+
+
+// カウントダウンを止める
+$("#gu_btn,#cho_btn,#par_btn").on("click",function(){
+    if(typeof intervalId !=="undefined"){
+clearInterval(intervalId);
+console.log("カウントダウン停止");
+    }
+})
+
+// カウントダウンを押したら表示
+$("#janken_btn").on("click",function(){
+    $("#gu_btn").show();
+    $("#cho_btn").show();
+    $("#par_btn").show();
+
+});
+
+
+
+//    youの出したもの
+//    グーの時
+   $("#gu_btn").on("click",function(){
+    const r =Math.ceil(Math.random()*3);
+    let you="";
+    let result="";
+    if(r==1){
+       result= `
+          <div class="video-container">
+            <video class="movie" autoplay muted loop>
+              <source src="img/draw.mp4" type="video/mp4">
+            </video>
+            <div class="result-text">
+            <p class="moji">DRAW</p><img src='img/gu.png' alt='写真' class='img1'><img src='img/you_gu.png' alt='写真2' class='img2'>
+            </div>
+          </div>
+        `;
+    }
+    if(r==2){
+        result= `
+          <div class="video-container">
+            <video class="movie" autoplay muted loop>
+              <source src="img/win.mp4" type="video/mp4">
+            </video>
+            <div class="result-text">
+            <p class="moji">WIN</p><img src='img/gu.png' alt='写真' class='img1'><img src='img/you_cho.png' alt='写真2' class='img2'>
+            </div>
+          </div>
+        `;
+    }
+    if(r==3){
+        result= `
+          <div class="video-container">
+            <video class="movie" autoplay muted loop>
+              <source src="img/lose.mp4" type="video/mp4">
+            </video>
+            <div class="result-text">
+            <p class="moji">LOSE</p><img src='img/gu.png' alt='写真' class='img1'><img src='img/you_par.png' alt='写真2' class='img2'>
+            </div>
+          </div>
+        `;
+    }
+
+    $("#pc_hands").html(you)
+    $("#judgment").html(result)
+});
+  
+//    チョキの時
+$("#cho_btn").on("click",function(){
+    const r =Math.ceil(Math.random()*3);
+    let you="";
+    let result="";
+    if(r==1){
+       result= `
+          <div class="video-container">
+            <video class="movie" autoplay muted loop>
+              <source src="img/lose.mp4" type="video/mp4">
+            </video>
+            <div class="result-text">
+            <p class="moji">LOSE</p><img src='img/cho.png' alt='写真' class='img1'><img src='img/you_gu.png' alt='写真2' class='img2'>
+            </div>
+          </div>
+        `;
+    }
+    if(r==2){
+       result= `
+          <div class="video-container">
+            <video class="movie" autoplay muted loop>
+              <source src="img/draw.mp4" type="video/mp4">
+            </video>
+            <div class="result-text">
+            <p class="moji">DRAW</p><img src='img/cho.png' alt='写真' class='img1'><img src='img/you_cho.png' alt='写真2' class='img2'>
+            </div>
+          </div>
+        `;
+    }
+    if(r==3){
+       result= `
+          <div class="video-container">
+            <video class="movie" autoplay muted loop>
+              <source src="img/win.mp4" type="video/mp4">
+            </video>
+            <div class="result-text">
+            <p class="moji">WIN</p><img src='img/cho.png' alt='写真' class='img1'><img src='img/you_par.png' alt='写真2' class='img2'>
+            </div>
+          </div>
+        `;
+    }
+
+    $("#pc_hands").html(you)
+    $("#judgment").html(result)
+});
+
+//    パーの時
+$("#par_btn").on("click",function(){
+    const r =Math.ceil(Math.random()*3);
+    let you="";
+    let result="";
+    if(r==1){
+       result= `
+          <div class="video-container">
+            <video class="movie" autoplay muted loop>
+              <source src="img/win.mp4" type="video/mp4">
+            </video>
+            <div class="result-text">
+            <p class="moji">WIN</p><img src='img/par.png' alt='写真' class='img1'><img src='img/you_gu.png' alt='写真2' class='img2'>
+            </div>
+          </div>
+        `;
+    }
+    if(r==2){
+        result= `
+          <div class="video-container">
+            <video class="movie" autoplay muted loop>
+              <source src="img/lose.mp4" type="video/mp4">
+            </video>
+            <div class="result-text">
+            <p class="moji">LOSE</p><img src='img/par.png' alt='写真' class='img1'><img src='img/you_cho.png' alt='写真2' class='img2'>
+            </div>
+          </div>
+        `;
+    }
+    if(r==3){
+        you=""
+        result= `
+          <div class="video-container">
+            <video class="movie" autoplay muted loop>
+              <source src="img/draw.mp4" type="video/mp4">
+            </video>
+            <div class="result-text">
+            <p class="moji">DRAW</p><img src='img/par.png' alt='写真' class='img1'><img src='img/you_par.png' alt='写真2' class='img2'>
+            </div>
+          </div>
+        `;
+    }
+
+    $("#pc_hands").html(you)
+    $("#judgment").html(result)
+});
+
+
+</script>
+
+   
+</body>
+
+</html>
