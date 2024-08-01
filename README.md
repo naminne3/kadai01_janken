@@ -8,7 +8,7 @@
 
 ## ③DEMO
 
-なし
+https://naminne3.github.io/kadai01_janken/
 
 ## ④作ったアプリケーション用のIDまたはPasswordがある場合
 
